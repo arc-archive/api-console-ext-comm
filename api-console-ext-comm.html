@@ -46,15 +46,23 @@ Polymer({
     _lastestRequestData: Object
   },
 
+  ready: function() {
+    window.postMessage({
+      payload: 'api-console-extension-installed'
+    }, location.origin);
+  },
+
   attached: function() {
     this.listen(window, 'message', '_messsageHandler');
     // Body will receive the event faster so it will cancel it before other listeners.
     this.listen(document.body, 'api-console-request', '_requestHandler');
+    this.listen(document.body, 'oauth2-token-requested', '_oauthTokenHandler');
   },
 
   detached: function() {
     this.unlisten(window, 'message', '_messsageHandler');
     this.unlisten(document.body, 'api-console-request', '_requestHandler');
+    this.unlisten(document.body, 'oauth2-token-requested', '_oauthTokenHandler');
   },
   /**
    * Called when message from `postMessage` is available.
@@ -76,6 +84,9 @@ Polymer({
         break;
       case 'api-console-response':
         this._responseReady(data['api-console-data']);
+        break;
+      case 'api-console-oauth2-token-response':
+        this._oauthTokenReady(data['api-console-data']);
         break;
     }
   },
@@ -210,6 +221,36 @@ Polymer({
       result.append(item.name, item.value);
     });
     return result;
+  },
+
+  _oauthTokenHandler: function(e) {
+    if (!this.extension) {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+
+    window.postMessage({
+      payload: 'api-console-oauth2',
+      detail: e.detail
+    }, location.origin);
+  },
+
+  _oauthTokenReady: function(tokenData) {
+    if (!tokenData) {
+      return this.fire('oauth2-error', {
+        'message': 'No response has been recorded.',
+        'code': 'no_response'
+      });
+    }
+    if (tokenData.error) {
+      return this.fire('oauth2-error', {
+        'message': tokenData.message || 'No response has been recorded.',
+        'code': tokenData.code || 'unknown_error'
+      });
+    }
+    this.fire('oauth2-token-response', tokenData);
   }
 });
 </script>
