@@ -14,7 +14,7 @@ addons:
   sauce_connect: true
 script:
   - npm run lint
-  - xvfb-run polymer test --plugin local
+  # - xvfb-run polymer test --plugin local
   # For some reason Sauce fails the test even if it runs locally...
   # - >-
   #   if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test --plugin sauce
