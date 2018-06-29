@@ -12,17 +12,21 @@ License for the specific language governing permissions and limitations under
 the License.
 -->
 <link rel="import" href="../polymer/polymer-element.html">
-<!--
-`<api-console-ext-comm>` is an element that support communication with the api-console-extension.
-
-If the extension is installed then it will intercept the `api-console-request` and cancel it.
-Data from the event will be passed to the extension and the request will be executed from within
-the extension.
-
-@group Logic Elements
-@element api-console-ext-comm
--->
 <script>
+/**
+ * `<api-console-ext-comm>` is an element that support communication with
+ * the api-console-extension.
+ *
+ * If the extension is installed then it will intercept the `api-request`
+ * and cancel it.
+ *
+ * Data from the event are passed to the extension and the request is to
+ * be executed from within the extension.
+ *
+ * @customElement
+ * @polymer
+ * @memberof ApiElements
+ */
 class ApiConsoleExtComm extends Polymer.Element {
   static get is() { return 'api-console-ext-comm'; }
   static get properties() {

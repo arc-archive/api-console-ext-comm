@@ -6,17 +6,6 @@
 
 Element that support communication with the api-console-extension
 
-<!---
-```
-<custom-element-demo>
-  <template>
-    <link rel="import" href="api-console-ext-comm.html">
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
-```
--->
-
 ```html
 <api-console-ext-comm></api-console-ext-comm>
 ```
