@@ -1,25 +1,14 @@
 <!doctype html>
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 <html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
     <script src="../../iron-test-helpers/test-helpers.js"></script>
     <link rel="import" href="../api-console-ext-comm.html">
   </head>
   <body>
-
     <test-fixture id="basic">
       <template>
         <api-console-ext-comm></api-console-ext-comm>
@@ -27,9 +16,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </test-fixture>
 
     <script>
-    /* global sinon, fixture, assert */
+    /* global sinon */
     suite('basic', function() {
-      var element;
+      let element;
       setup(function() {
         element = fixture('basic');
       });
@@ -54,7 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('Should fire api-console-extension-installed', function() {
-        var spy = sinon.stub();
+        const spy = sinon.stub();
         element.addEventListener('api-console-extension-installed', spy);
         initExtension();
         assert.isTrue(spy.calledOnce);
@@ -62,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('Should cancel api-console-request event', function() {
         initExtension();
-        var event = new CustomEvent('api-console-request', {
+        const event = new CustomEvent('api-console-request', {
           cancelable: true,
           bubbles: true,
           composed: true,
@@ -77,13 +66,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('Should post message to content script', function(done) {
         initExtension();
-        var fn = function(e) {
-          window.removeEventListener('message', fn);
+        window.addEventListener('message', function clb(e) {
+          window.removeEventListener('message', clb);
           assert.equal(e.data.payload, 'api-console-request');
           done();
-        };
-        window.addEventListener('message', fn);
-        var event = new CustomEvent('api-console-request', {
+        });
+        const event = new CustomEvent('api-console-request', {
           cancelable: true,
           bubbles: true,
           composed: true,
@@ -97,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('Should fire api-console-response event', function() {
         initExtension();
-        var spy = sinon.stub();
+        const spy = sinon.stub();
         element.addEventListener('api-console-response', spy);
         element._lastestRequestData = {
           method: 'GET',
@@ -110,19 +98,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             'api-console-extension': true,
             'api-console-data': {
               data: {
-                responseData: {
+                loadingTime: 100,
+                response: {
                   response: 'test',
-                  responseText: 'test',
-                  responseType: '',
-                  responseURL: 'https://test',
                   status: 200,
                   statusText: '',
-                  readyState: 4,
                   headers: ''
-                },
-                stats: {
-                  loadingTime: 100,
-                  startTime: 0
                 }
               }
             }

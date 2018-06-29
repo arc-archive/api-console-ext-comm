@@ -1,16 +1,26 @@
-[![Build Status](https://travis-ci.org/advanced-rest-client/api-console-ext-comm.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/api-console-ext-comm)  
+[![Build Status](https://travis-ci.org/advanced-rest-client/api-url-data-model.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/api-console-ext-comm)
+
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/api-console-ext-comm)
 
 # api-console-ext-comm
 
-`<api-console-ext-comm>` is an element that support communication with the api-console-extension.
+Element that support communication with the api-console-extension
 
-If the extension is installed then it will intercept the `api-console-request` and cancel it.
-Data from the event will be passed to the extension and the request will be executed from within
-the extension.
+<!---
+```
+<custom-element-demo>
+  <template>
+    <link rel="import" href="api-console-ext-comm.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 
+```html
+<api-console-ext-comm></api-console-ext-comm>
+```
 
+### API components
 
-### Events
-| Name | Description | Params |
-| --- | --- | --- |
-| api-console-extension-installed | Called when the API console extension has been detected, | __none__ |
+This components is a part of API components ecosystem: https://elements.advancedrestclient.com/
