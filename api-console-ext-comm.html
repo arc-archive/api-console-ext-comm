@@ -281,8 +281,8 @@ class ApiConsoleExtComm extends Polymer.Element {
       data.tokenType : undefined;
     const tokenTime = data.tokenTime && typeof data.tokenTime === 'number' ?
       data.tokenTime : undefined;
-    const expiresIn = data.expiresIn && (typeof data.expiresIn === 'number' || typeof data.expiresIn === 'string') ?
-      Number(data.tokenTime) : undefined;
+    const expiresIn = data.expiresIn && (typeof data.expiresIn === 'number' ||
+      typeof data.expiresIn === 'string') ? Number(data.expiresIn) : undefined;
     const scope = data.scope && typeof data.scope === 'string' ?
       data.scope : undefined;
     this.dispatchEvent(new CustomEvent('oauth2-token-response', {
