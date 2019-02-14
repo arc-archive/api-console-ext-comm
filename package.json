@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "description": "Element that support communication with the api-console-extension",
   "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.1.1"
+    "@polymer/gen-typescript-declarations": "^1.6.1"
   },
   "private": false,
   "main": "api-console-ext-comm.html",
