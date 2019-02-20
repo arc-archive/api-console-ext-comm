@@ -1,9 +1,7 @@
 language: node_js
 node_js: stable
 sudo: required
-before_script:
-  - npm install -g polymer-cli
-  - polymer install --variants
+before_script: npm install -g polymer-cli istanbul web-component-tester-istanbul
 addons:
   firefox: latest
   apt:
@@ -12,19 +10,7 @@ addons:
     packages:
       - google-chrome-stable
   sauce_connect: true
-script:
-  - npm run lint
-  # - xvfb-run polymer test --plugin local
-  # For some reason Sauce fails the test even if it runs locally...
-  # - >-
-  #   if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test --plugin sauce
-  #   --job-name "api-console-ext-comm:${TRAVIS_BRANCH}"
-  #   --build-number=${TRAVIS_BUILD_NUMBER}; fi
-cache:
-  directories:
-    - node_modules
-after_success:
-  - node tasks/ci.js
+script: npm run lint
 env:
   global:
     - secure: >-

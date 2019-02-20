@@ -1,4 +1,4 @@
-<!--
+/**
 @license
 Copyright 2018 The Advanced REST client authors <arc@mulesoft.com>
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -10,9 +10,9 @@ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
--->
-<link rel="import" href="../polymer/polymer-element.html">
-<script>
+*/
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+
 /**
  * `<api-console-ext-comm>` is an element that support communication with
  * the api-console-extension.
@@ -27,8 +27,10 @@ the License.
  * @polymer
  * @memberof ApiElements
  */
-class ApiConsoleExtComm extends Polymer.Element {
-  static get is() { return 'api-console-ext-comm'; }
+class ApiConsoleExtComm extends PolymerElement {
+  static get is() {
+    return 'api-console-ext-comm';
+  }
   static get properties() {
     return {
       /**
@@ -223,6 +225,7 @@ class ApiConsoleExtComm extends Polymer.Element {
   }
   /**
    * A handler for the response notified by the extension.
+   * @param {Object} data
    */
   _responseReady(data) {
     if (!this.hasExtension) {
@@ -309,4 +312,3 @@ class ApiConsoleExtComm extends Polymer.Element {
    */
 }
 window.customElements.define(ApiConsoleExtComm.is, ApiConsoleExtComm);
-</script>
