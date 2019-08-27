@@ -1,15 +1,55 @@
-[![Build Status](https://travis-ci.org/advanced-rest-client/api-url-data-model.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/api-console-ext-comm)
+[![Published on NPM](https://img.shields.io/npm/v/@api-components/api-console-ext-comm.svg)](https://www.npmjs.com/package/@api-components/api-console-ext-comm)
 
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/api-console-ext-comm)
+[![Build Status](https://travis-ci.org/advanced-rest-client/api-url-data-model.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/api-console-ext-comm)
 
 # api-console-ext-comm
 
-Element that support communication with the api-console-extension
+Element that support communication with the api-console-extension.
+It is used in API Console project.
 
-```html
-<api-console-ext-comm></api-console-ext-comm>
+## Usage
+
+### Installation
+```
+npm install --save @api-components/api-console-ext-comm
 ```
 
-### API components
+### In a LitElement
 
-This components is a part of API components ecosystem: https://elements.advancedrestclient.com/
+```js
+import { LitElement, html } from 'lit-element';
+import '@api-components/api-console-ext-comm/api-console-ext-comm.js';
+
+class SampleElement extends PolymerElement {
+  render() {
+    return html`
+    <api-console-ext-comm
+      @hasextension-changed="${this._extensionDetectedHandler}"></api-console-ext-comm>
+    `;
+  }
+
+  _extensionDetectedHandler(e) {
+    console.log('The browser has API console extension');
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
+
+## Development
+
+```sh
+git clone https://github.com/advanced-rest-client/api-console-ext-comm
+cd api-console-ext-comm
+npm install
+```
+
+### Running the demo locally
+
+```sh
+npm start
+```
+
+### Running the tests
+```sh
+npm test
+```

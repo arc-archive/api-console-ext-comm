@@ -1,7 +1,7 @@
 /**
  * A class that mocks content script communication.
  */
-class ChromeApiMock {
+export class ChromeApiMock {
   constructor() {
     this.oauthError = false;
     this._messsageHandler = this._messsageHandler.bind(this);
@@ -83,5 +83,5 @@ class ChromeApiMock {
     }, 1);
   }
 }
-const service = new ChromeApiMock();
-service.register();
+// const service = new ChromeApiMock();
+// service.register();

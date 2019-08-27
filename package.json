@@ -1,48 +1,70 @@
 {
+  "name": "@api-components/api-console-ext-comm",
   "description": "Element that support communication with the api-console-extension",
+  "version": "3.0.0",
+  "license": "Apache-2.0",
+  "main": "api-console-ext-comm.js",
   "keywords": [
     "web-components",
-    "polymer"
+    "api-console",
+    "extension"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/advanced-rest-client/api-console-ext-comm.git"
-  },
-  "name": "@api-components/api-console-ext-comm",
-  "version": "3.0.0-preview.2",
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.6.1",
-    "@polymer/iron-component-page": "^4.0.0",
-    "@polymer/iron-demo-helpers": "^3.0.0",
-    "@polymer/iron-test-helpers": "^3.0.0",
-    "@webcomponents/webcomponentsjs": "^2.0.0",
-    "@polymer/test-fixture": "^4.0.2",
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "sinon": "^7.2.3",
-    "wct-mocha": "^1.0.0"
-  },
-  "main": "api-console-ext-comm.js",
-  "scripts": {
-    "lint": "polymer lint api-console-ext-comm.html",
-    "test-sauce": "polymer test --plugin sauce --job-name \"api-console-ext-comm:local-test\"",
-    "test": "polymer test --plugin local",
-    "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
-  },
+  "authors": [
+    "Pawel Psztyc"
+  ],
+  "contributors": [
+    "The Advanced REST client authors <arc@mulesoft.com>"
+  ],
   "bugs": {
     "url": "https://github.com/advanced-rest-client/api-console-ext-comm/issues",
     "email": "arc@mulesoft.com"
   },
-  "authors": [
-    "Pawel Psztyc",
-    "The Advanced REST client authors <arc@mulesoft.com>"
-  ],
-  "contributors": [
-    "Pawel Psztyc",
-    "The Advanced REST client authors <arc@mulesoft.com>"
-  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/advanced-rest-client/api-console-ext-comm.git"
+  },
   "dependencies": {
-    "@polymer/polymer": "^3.0.0"
+    "lit-element": "^2.0.1"
+  },
+  "devDependencies": {
+    "@advanced-rest-client/eslint-config": "^1.1.1",
+    "@advanced-rest-client/prettier-config": "^0.1.0",
+    "@advanced-rest-client/testing-karma-sl": "^1.0.3",
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^7.0.0",
+    "@open-wc/testing": "^2.2.8",
+    "@open-wc/testing-karma": "^3.1.28",
+    "@polymer/gen-typescript-declarations": "^1.6.2",
+    "@polymer/iron-test-helpers": "^3.0.1",
+    "deepmerge": "^4.0.0",
+    "es-dev-server": "^1.15.3",
+    "husky": "^1.0.0",
+    "karma": "^4.2.0",
+    "lint-staged": "^9.2.5",
+    "sinon": "^7.4.1"
+  },
+  "scripts": {
+    "update-types": "gen-typescript-declarations --deleteExisting --outDir .",
+    "start": "es-dev-server --app-index demo/index.html --node-resolve --open --watch",
+    "start:compatibility": "es-dev-server --app-index demo/index.html --compatibility all --node-resolve --open --watch",
+    "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
+    "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
+    "lint:prettier": "prettier \"**/*.js\" --check --ignore-path .gitignore",
+    "format:prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "test": "karma start --coverage",
+    "test:watch": "karma start --auto-watch=true --single-run=false",
+    "test:update-snapshots": "karma start --update-snapshots",
+    "test:prune-snapshots": "karma start --prune-snapshots",
+    "test:compatibility": "karma start --compatibility all --coverage",
+    "test:compatibility:watch": "karma start --compatibility all --auto-watch=true --single-run=false",
+    "test:sl": "karma start karma.sl.config.js --compatibility all --coverage"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
