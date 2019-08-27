@@ -1,4 +1,4 @@
-import { fixture, assert } from '@open-wc/testing';
+import { fixture, assert, aTimeout } from '@open-wc/testing';
 import * as sinon from 'sinon/pkg/sinon-esm.js';
 import { ChromeApiMock } from './api-mock.js';
 import '../api-console-ext-comm.js';
@@ -58,6 +58,7 @@ describe('<api-console-ext-comm>', function() {
       beforeEach(async () => {
         element = await basicFixture();
         element.eventTarget = eventTarget;
+        await aTimeout(10);
       });
 
       function fireRequestEvent(node) {
@@ -77,46 +78,34 @@ describe('<api-console-ext-comm>', function() {
         return e;
       }
 
-      it('Cancels api-request event', (done) => {
-        setTimeout(() => {
-          const e = fireRequestEvent(eventTarget);
-          assert.isTrue(e.defaultPrevented);
-          done();
-        }, 10);
+      it('cancels api-request event', () => {
+        const e = fireRequestEvent(eventTarget);
+        assert.isTrue(e.defaultPrevented);
       });
 
-      it('api-request event is stopped', (done) => {
+      it('stops api-request event bubbling', () => {
         const spy = sinon.spy();
         document.body.addEventListener('api-request', spy);
-        setTimeout(() => {
-          fireRequestEvent(eventTarget);
-          assert.isFalse(spy.called);
-          done();
-        }, 10);
+        fireRequestEvent(eventTarget);
+        assert.isFalse(spy.called);
       });
 
-      it('Sets the request in the active requests queue', (done) => {
-        setTimeout(() => {
-          fireRequestEvent(eventTarget);
-          assert.ok(element._activeRequests['test-id']);
-          done();
-        }, 10);
+      it('sets the request in the active requests queue', () => {
+        fireRequestEvent(eventTarget);
+        assert.ok(element._activeRequests['test-id']);
       });
 
-      it('Does not handles event from outside event target', (done) => {
-        setTimeout(() => {
-          const e = fireRequestEvent(document);
-          assert.isFalse(e.defaultPrevented);
-          done();
-        }, 5);
+      it('does not handles event from outside event target', () => {
+        const e = fireRequestEvent(document);
+        assert.isFalse(e.defaultPrevented);
       });
 
       it('Dispatches api-response event', (done) => {
-        setTimeout(() => fireRequestEvent(eventTarget), 5);
         document.body.addEventListener('api-response', function clb() {
           document.body.removeEventListener('api-response', clb);
           done();
         });
+        fireRequestEvent(eventTarget);
       });
 
       it('The respnse contains request data', (done) => {
@@ -152,6 +141,7 @@ describe('<api-console-ext-comm>', function() {
       beforeEach(async () => {
         element = await basicFixture();
         element.eventTarget = eventTarget;
+        await aTimeout(10);
       });
 
       function fireTokenEvent(node) {
@@ -167,41 +157,29 @@ describe('<api-console-ext-comm>', function() {
         return e;
       }
 
-      it('Cancels oauth2-token-requested event', (done) => {
-        setTimeout(() => {
-          const e = fireTokenEvent(eventTarget);
-          assert.isTrue(e.defaultPrevented);
-          done();
-        }, 5);
+      it('Cancels oauth2-token-requested event', () => {
+        const e = fireTokenEvent(eventTarget);
+        assert.isTrue(e.defaultPrevented);
       });
 
-      it('oauth2-token-requested event is stopped', (done) => {
-        let eventCalled = false;
-        document.body.addEventListener('api-request', function clb() {
-          document.body.removeEventListener('api-request', clb);
-          eventCalled = true;
-        });
-        setTimeout(() => {
-          fireTokenEvent(eventTarget);
-          assert.isFalse(eventCalled);
-          done();
-        }, 5);
+      it('stops oauth2-token-requested event bubbling', () => {
+        const spy = sinon.spy();
+        document.body.addEventListener('oauth2-token-requested', spy);
+        fireTokenEvent(eventTarget);
+        assert.isFalse(spy.called);
       });
 
-      it('Does not handles event from outside event target', (done) => {
-        setTimeout(() => {
-          const e = fireTokenEvent(document.body);
-          assert.isFalse(e.defaultPrevented);
-          done();
-        }, 5);
+      it('Does not handles event from outside event target', () => {
+        const e = fireTokenEvent(document.body);
+        assert.isFalse(e.defaultPrevented);
       });
 
       it('Dispatches oauth2-token-response event', (done) => {
-        setTimeout(() => fireTokenEvent(eventTarget), 5);
         document.body.addEventListener('oauth2-token-response', function clb() {
           document.body.removeEventListener('oauth2-token-response', clb);
           done();
         });
+        setTimeout(() => fireTokenEvent(eventTarget), 5);
       });
 
       it('Event contains response data', (done) => {

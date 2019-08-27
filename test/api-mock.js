@@ -35,7 +35,7 @@ export class ChromeApiMock {
         'api-console-payload': 'init',
         'api-console-extension': true
       }, location.origin);
-    }, 1);
+    });
   }
 
   _handleRequest(data) {
@@ -52,7 +52,7 @@ export class ChromeApiMock {
           }
         }
       }, location.origin);
-    }, 1);
+    });
   }
 
   _handleToken(detail) {
@@ -80,8 +80,6 @@ export class ChromeApiMock {
         'api-console-extension': true,
         'api-console-data': response
       }, location.origin);
-    }, 1);
+    });
   }
 }
-// const service = new ChromeApiMock();
-// service.register();
