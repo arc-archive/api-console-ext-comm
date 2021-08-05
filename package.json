@@ -84,8 +84,5 @@
     "*.js": [
       "eslint --fix"
     ]
-  },
-  "publishConfig": {
-    "access": "restricted"
   }
 }
