@@ -1,11 +1,11 @@
 import { fixture, assert, aTimeout } from '@open-wc/testing';
-import * as sinon from 'sinon/pkg/sinon-esm.js';
+import sinon from 'sinon';
 import { ChromeApiMock } from './api-mock.js';
 import '../api-console-ext-comm.js';
 
-describe('<api-console-ext-comm>', function() {
+describe('<api-console-ext-comm>', () => {
   async function basicFixture() {
-    return (await fixture(`<api-console-ext-comm></api-console-ext-comm>`));
+    return (fixture(`<api-console-ext-comm></api-console-ext-comm>`));
   }
 
   describe('communication test', () => {
@@ -108,7 +108,7 @@ describe('<api-console-ext-comm>', function() {
         fireRequestEvent(eventTarget);
       });
 
-      it('The respnse contains request data', (done) => {
+      it('The response contains request data', (done) => {
         setTimeout(() => fireRequestEvent(eventTarget), 5);
         document.body.addEventListener('api-response', function clb(e) {
           document.body.removeEventListener('api-response', clb);
@@ -117,7 +117,7 @@ describe('<api-console-ext-comm>', function() {
         });
       });
 
-      it('The respnse contains request id', (done) => {
+      it('The response contains request id', (done) => {
         setTimeout(() => fireRequestEvent(eventTarget), 5);
         document.body.addEventListener('api-response', function clb(e) {
           document.body.removeEventListener('api-response', clb);

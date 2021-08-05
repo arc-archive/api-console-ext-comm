@@ -4,18 +4,18 @@
 export class ChromeApiMock {
   constructor() {
     this.oauthError = false;
-    this._messsageHandler = this._messsageHandler.bind(this);
+    this._messageHandler = this._messageHandler.bind(this);
   }
 
   register() {
-    window.addEventListener('message', this._messsageHandler);
+    window.addEventListener('message', this._messageHandler);
   }
 
   unregister() {
-    window.removeEventListener('message', this._messsageHandler);
+    window.removeEventListener('message', this._messageHandler);
   }
 
-  _messsageHandler(e) {
+  _messageHandler(e) {
     switch (e.data.payload) {
       case 'api-console-extension-installed':
         this._handleInstalled();
@@ -26,6 +26,7 @@ export class ChromeApiMock {
       case 'api-console-oauth2':
         this._handleToken(e.data.detail);
         break;
+      default:
     }
   }
 
@@ -34,7 +35,7 @@ export class ChromeApiMock {
       window.postMessage({
         'api-console-payload': 'init',
         'api-console-extension': true
-      }, location.origin);
+      }, window.location.origin);
     });
   }
 
@@ -51,7 +52,7 @@ export class ChromeApiMock {
             response: {}
           }
         }
-      }, location.origin);
+      }, window.location.origin);
     });
   }
 
@@ -79,7 +80,7 @@ export class ChromeApiMock {
         'api-console-payload': 'api-console-oauth2-token-response',
         'api-console-extension': true,
         'api-console-data': response
-      }, location.origin);
+      }, window.location.origin);
     });
   }
 }
